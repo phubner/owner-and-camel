@@ -13,14 +13,24 @@ public class MyRouteBuilder extends RouteBuilder {
      */
     public void configure() {
 
+        /**
+         * create a factory and tell it what properties to use.
+         * In this case we want to grab data from the env as well as
+         * what we specified in the ServerConfig class
+         *
+         * If you want to not use the default defined in server.properties
+         * set your env $FOO_ENV to something other than 30
+         */
         ServerConfig conf = ConfigFactory
                 .create(ServerConfig.class,
                         System.getProperties(),
                         System.getenv());
 
-        // here is a sample which processes the input files
-        // (leaving them in place - see the 'noop' flag)
-        // then performs content based routing on the message using XPath
+        /**
+         * This sample just uses files as a Producer. The goal
+         * is to pull the correct property from the ServerConfig and
+         * use it in the route.
+         */
         from("file:src/data?noop=true")
                 .log("ENV var " + conf.maxThreads());
 
