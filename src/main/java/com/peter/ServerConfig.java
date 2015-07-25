@@ -11,8 +11,15 @@ import org.aeonbits.owner.Config;
  * your properties. They are heirachical in nature so the first
  * "file" that contains the requested properties will win
  */
-@Config.Sources({"classpath:server.properties" })
+@Config.HotReload
+@Config.Sources({
+        "classpath:server.properties",
+        "file:/tmp/test.properties"})
 public interface ServerConfig extends Config {
+
     @DefaultValue("${FOO_ENV}")
     int maxThreads();
+
+    @Config.DefaultValue("5")
+    int myNumber();
 }
